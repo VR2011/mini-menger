@@ -1,0 +1,1 @@
+data:text/html,<body><h1>Working!</h1><style>body{background:black;color:white;font-family:sans-serif}</style><script>const e=document.querySelector("h1");e.oneclick=()=>e.textContent="Clicked!";</script></body>
