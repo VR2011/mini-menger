@@ -4,7 +4,7 @@
 
 A interactable Menger Sponge you can interact with. Works completely in your browser, just go to the dist folder in the repository and paste whatever is in uri.txt in the URL.
 
-You can drag the cube around and right click to move it. Use the scroll wheel to zoom!
+You can left click to move the cube around and right click to drag it wherever. Use the scroll wheel to zoom!
 
 This also works on mobile, just move with two fingers to move the cube.
 
