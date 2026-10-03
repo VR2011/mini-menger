@@ -4,27 +4,67 @@
     <script>
         g=c.getContext('webgl');
         P=g.createProgram();
-        function S(t,s){x=g.createShader(t);g.shaderSource(x,s);g.compileShader(x);g.attachShader(P,x)}
+        function S(t,s){
+            x=g.createShader(t);g.shaderSource(x,s);g.compileShader(x);g.attachShader(P,x)
+        }
         S(35633,'attribute vec2 p;uniform vec4 u;uniform vec3 v;varying vec3 d,o;void main(){float s=sin(u.y),c=cos(u.y),a=sin(u.x),b=cos(u.x);mat2 A=mat2(b,-a,a,b),C=mat2(c,-s,s,c);d=vec3(p*max(vec2(u.w,1./u.w),1.),2.);o=vec3(0.,0.,-u.z);d.yz=A*d.yz;d.xz=C*d.xz;o.yz=A*o.yz;o.xz=C*o.xz;o+=v;gl_Position=vec4(p,0.,1.);}');
-        S(35632,'precision highp float;varying vec3 d,o;float k=0.;float M(vec3 p){vec3 q=abs(p)-1.;float h=max(q.x,max(q.y,q.z)),s=1.;for(int m=0;m<8;m++){if(s*k*.001>1.)break;q=abs(1.-3.*abs(mod(p*s,2.)-1.));s*=3.;h=max(h,(min(max(q.x,q.y),min(max(q.y,q.z),max(q.z,q.x)))-1.)/s);}return h;}void main(){vec3 r=normalize(d),p=o;float h;for(float i=0.;i<1.;i+=.01){if(k>20.)break;h=M(p);if(h<k*.001){gl_FragColor=vec4(p*.5+.5,1)*(1.-i);return;}p+=r*h;k+=h;}discard;}');
+        S(35632,'precision highp float;varying vec3 d,o;float k=0.;float M(vec3 p){vec3 q=abs(p)-1.;float h=max(q.x,max(q.y,q.z)),s=1.;for(int m=0;m<8;m++){if(s*k*.001>1.)break;q=abs(1.-3.*abs(mod(p*s,2.)-1.));s*=3.;h=max(h,(min(max(q.x,q.y),min(max(q.y,q.z),max(q.z,q.x)))-1.)/s);}return h;}void main(){vec3 r=normalize(d),p=o;float h;for(float i=0.;i<1.;i+=.01){if(k>20.)break;h=M(p);if(h<k*1e-4){vec2 e=vec2(k*.002,0);gl_FragColor=vec4(p*.5+.5,1)*(1.-i)*(.4+.6*abs(dot(normalize(vec3(M(p+e.xyy),M(p+e.yxy),M(p+e.yyx))-h),r)));return;}p+=r*h;k+=h;}discard;}');
         g.linkProgram(P);g.useProgram(P);
         g.bindBuffer(34962,g.createBuffer());
         g.bufferData(34962,new Float32Array([-1,-1,1,-1,-1,1,1,1]),35044);
         g.enableVertexAttribArray(0);
         g.vertexAttribPointer(0,2,5126,0,0,0);
-        X=Y=W=0;Z=5;Q={};L=[0,0,0];
-        f=_=>{g.uniform3fv(g.getUniformLocation(P,'v'),L);g.uniform4f(g.getUniformLocation(P,'u'),X,Y,Z,c.width/c.height);g.drawArrays(5,0,4)};
-        R=_=>{W||requestAnimationFrame(_=>{W=0;f()});W=1};
-        onresize=r=_=>{c.width=innerWidth;c.height=innerHeight;g.viewport(0,0,c.width,c.height);f()};r();
-        U=z=>{Z=Math.min(9,Math.max(.004,z));R()};
-        N=(x,y,m=Z/Math.min(innerWidth,innerHeight),a=Math.sin(X),b=Math.cos(X),s=Math.sin(Y),C=Math.cos(Y))=>{L[0]-=m*(C*x+s*a*y);L[1]+=m*b*y;L[2]+=m*(s*x-C*a*y)};
+        X=Y=W=0;Z=5;Q={};
+        L=[0,0,0];
+        f=_=>{
+            g.uniform3fv(g.getUniformLocation(P,'v'),L);
+            g.uniform4f(g.getUniformLocation(P,'u'),X,Y,Z,c.width/c.height);
+            g.drawArrays(5,0,4)
+        };
+        R=_=>
+            {W||requestAnimationFrame(_=>{
+                W=0;
+                f()});
+                W=1
+            };
+        onresize=r=_=>{
+            c.width=innerWidth;
+            c.height=innerHeight;
+            g.viewport(0,0,c.width,c.height);
+            f()
+        };
+        r();
+        U=z=>{
+            Z=Math.min(9,Math.max(.004,z));
+            R()
+        };
+        N=(x,y,m=Z/Math.min(innerWidth,innerHeight),a=Math.sin(X),b=Math.cos(X),s=Math.sin(Y),C=Math.cos(Y))=>{
+            L[0]-=m*(C*x+s*a*y);
+            L[1]+=m*b*y;L[2]+=m*(s*x-C*a*y)
+        };
         D=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
         onwheel=e=>U(Z*(1+e.deltaY/1e3));
         onpointerdown=e=>Q[e.pointerId]=e;
-        onpointermove=e=>{p=Q[e.pointerId];if(p){k=Object.values(Q);x=e.clientX-p.clientX;y=e.clientY-p.clientY;if(k[1]){o=k[0]==p?k[1]:k[0];N(x/2,y/2);U(Z*D(p,o)/D(e,o))}else{e.buttons>1?N(x,y):(Y+=x/200,X-=y/200);R()}Q[e.pointerId]=e}};
+        onpointermove=e=>{
+            p=Q[e.pointerId];
+            if(p){k=Object.values(Q);
+                x=e.clientX-p.clientX;
+                y=e.clientY-p.clientY;
+                if(k[1]){
+                    o=k[0]==p?k[1]:k[0];
+                    N(x/2,y/2);U(Z*D(p,o)/D(e,o))
+                }
+                else{
+                    e.buttons>1?N(x,y):(Y+=x/200,X-=y/200);
+                    R()
+                }
+                Q[e.pointerId]=e
+            }
+        };
         oncontextmenu=_=>!1;
         for(j of['pointerup', 'pointercancel'])addEventListener(j,e=>delete Q[e.pointerId]);
-        onpointerup=_=>{({abs,random}=Math);onpointerup=0;
+        onpointerup=_=>{
+            ({abs,random}=Math);onpointerup=0;
         h.remove();
         A=new AudioContext({sampleRate:44100});
         n=A.createScriptProcessor(8192,0,1);
@@ -34,4 +74,3 @@
         n.onaudioprocess=e=>{d=e.outputBuffer.getChannelData(0);
         for(i=0;i<8192;i++)d[i]=((M(T=t/5e3)/3+M(T-3)/5+(T>>7&&(t*2**((T&4&&(T&7)-1)/6-4)&63*(197>>T%8&1))+random()*32*(1-(T+4)%8/8)))&255)/512-.25,t++}}
     </script>
-</body>
