@@ -1,7 +1,14 @@
 # MINIMENGER
-A interactable Menger Sponge you can interact with. Works completely in your browser, just go to the dist folder in the repository and paste whatever is in uri.txt.
 
-Currently a work in progress!
+![Image](https://i.ibb.co/QF20W9vh/Screenshot-2026-10-03-140221.png)
+
+A interactable Menger Sponge you can interact with. Works completely in your browser, just go to the dist folder in the repository and paste whatever is in uri.txt in the URL.
+
+You can drag the cube around and right click to move it. Use the scroll wheel to zoom!
+
+This also works on mobile, just move with two fingers to move the cube.
+
+**MAY LAG ON LOW-END DEVICES!!!!!**
 
 Made for the [SHRINK](https://shrink.hackclub.com/) YSWS.
 
