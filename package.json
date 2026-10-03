@@ -1,5 +1,5 @@
 {
-  "name": "miniger-sponge",
+  "name": "mini-menger",
   "version": "1.0.0",
   "description": "a 3d menger sponge you can interact with. tiny project",
   "main": "index.js",
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VR2011/miniger-sponge.git"
+    "url": "git+https://github.com/VR2011/mini-menger.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/VR2011/miniger-sponge/issues"
+    "url": "https://github.com/VR2011/mini-menger/issues"
   },
-  "homepage": "https://github.com/VR2011/miniger-sponge#readme",
+  "homepage": "https://github.com/VR2011/mini-menger#readme",
   "devDependencies": {
     "terser": "^5.51.2"
   }
